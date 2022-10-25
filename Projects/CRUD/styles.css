@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 2rem 2rem;
+}
+
+.mainTitle {
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-gap: 5rem 0;
+    padding: 1rem;
+    margin: 5rem auto;
+}
+
+.list-expense-item {
+    grid-column: 1 / 4;
+    border: 1px red solid;
+}
