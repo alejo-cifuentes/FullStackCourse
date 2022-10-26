@@ -75,23 +75,34 @@ window.onload  = function(){
 
     window.onclick = e => {
         if (e.target.tagName === "BUTTON" && e.target.innerText !== "Add Expense") {
+            let expenses = getExpenses(name);
             let id = (e.target.id).split("-")[1];
             if (e.target.innerText === "Edit") {
                 console.log("Editando", e.target.id);
                 enableElements(id);
             } else if (e.target.innerText === "Delete") {
-
-                console.log("Eliminando", e.target.id);
-                console.log("Eliminando", e);
                 
-                let expenses = getExpenses(name);
-                // expenses = ;
+               
                 saveExpenses(name, expenses.filter(item => item.indexOf(`row-${id}`) === -1));
                 printExpenses(name);
 
             } else if (e.target.innerText === "Save") {
                 console.log("Guardando", e.target.id);
+                let listItem = `
+                <div id="row-${id}">
+                    ${id}. 
+                    <input id="bill-${id}" type="text" value="${document.getElementById("bill-"+id).value}" disabled />
+                    <input id="desc-${id}"type="text" value="${document.getElementById("desc-"+id).value}" disabled />
+                    <input id="amount-${id}"type="text" value="${document.getElementById("amount-"+id).value}" disabled />
+                    <button id="btnEdit-${id}">Edit</button>
+                    <button id="btnDelete-${id}">Delete</button>
+                </div>
+                `;
                 disableElements(id);
+                let index = expenses.findIndex((item) => item.indexOf(`row-${id}`) !== -1);
+                expenses[index] = listItem
+                saveExpenses(name, expenses);
+                printExpenses(name);
             }
         };
     };
