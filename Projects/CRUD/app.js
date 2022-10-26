@@ -57,6 +57,7 @@ window.onload  = function(){
     };
 
     const updateValues = (id) => {
+        let expenses = getExpenses(name);
         let listItem = `
             <div id="row-${id}">
                 ${id}. 
@@ -67,7 +68,14 @@ window.onload  = function(){
                 <button id="btnDelete-${id}">Delete</button>
             </div>
         `;
-        return listItem;
+        let index = expenses.findIndex((item) => item.indexOf(`row-${id}`) !== -1);
+        expenses[index] = listItem;
+        saveExpenses(name, expenses);
+    };
+
+    const deleteExpense = (id) => {
+        let expenses = getExpenses(name);
+        saveExpenses(name, expenses.filter(item => item.indexOf(`row-${id}`) === -1));
     };
 
     const cleanValues = () => {
@@ -96,24 +104,18 @@ window.onload  = function(){
 
     window.onclick = e => {
         if (e.target.tagName === "BUTTON" && e.target.innerText !== "Add Expense") {
-            let expenses = getExpenses(name);
+            
             let id = (e.target.id).split("-")[1];
             if (e.target.innerText === "Edit") {
                 console.log("Editando", e.target.id);
                 enableElements(id);
             } else if (e.target.innerText === "Delete") {
-                
-               
-                saveExpenses(name, expenses.filter(item => item.indexOf(`row-${id}`) === -1));
+                deleteExpense(id);
                 printExpenses(name);
-
             } else if (e.target.innerText === "Save") {
                 console.log("Guardando", e.target.id);
-                updateValues(id);
                 disableElements(id);
-                let index = expenses.findIndex((item) => item.indexOf(`row-${id}`) !== -1);
-                expenses[index] = updateValues(id);
-                saveExpenses(name, expenses);
+                updateValues(id);
                 printExpenses(name);
             }
         };
@@ -121,5 +123,4 @@ window.onload  = function(){
 
 
     printExpenses(name);
-    // averigaur quien dio click en delete o edit para edit entonces volver a pintar todo el DOM con los expenses como quedaron despues de guardar
 };
