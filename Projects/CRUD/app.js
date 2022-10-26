@@ -56,6 +56,26 @@ window.onload  = function(){
         document.getElementById(`btnEdit-${index}`).innerText = "Edit"; 
     };
 
+    const updateValues = (id) => {
+        let listItem = `
+            <div id="row-${id}">
+                ${id}. 
+                <input id="bill-${id}" type="text" value="${document.getElementById("bill-"+id).value}" disabled />
+                <input id="desc-${id}"type="text" value="${document.getElementById("desc-"+id).value}" disabled />
+                <input id="amount-${id}"type="text" value="${document.getElementById("amount-"+id).value}" disabled />
+                <button id="btnEdit-${id}">Edit</button>
+                <button id="btnDelete-${id}">Delete</button>
+            </div>
+        `;
+        return listItem;
+    };
+
+    const cleanValues = () => {
+        bill.value = "";
+        billDesc.value = "";
+        billAmount.value = "";
+    };
+
     // events
     addButton.addEventListener('click', () => {
         let idx = getNextIdx(name) + 1;
@@ -70,6 +90,7 @@ window.onload  = function(){
         </div>
         `;
         saveExpense(name, listItem);
+        cleanValues();
         printExpenses(name);
     });
 
@@ -88,19 +109,10 @@ window.onload  = function(){
 
             } else if (e.target.innerText === "Save") {
                 console.log("Guardando", e.target.id);
-                let listItem = `
-                <div id="row-${id}">
-                    ${id}. 
-                    <input id="bill-${id}" type="text" value="${document.getElementById("bill-"+id).value}" disabled />
-                    <input id="desc-${id}"type="text" value="${document.getElementById("desc-"+id).value}" disabled />
-                    <input id="amount-${id}"type="text" value="${document.getElementById("amount-"+id).value}" disabled />
-                    <button id="btnEdit-${id}">Edit</button>
-                    <button id="btnDelete-${id}">Delete</button>
-                </div>
-                `;
+                updateValues(id);
                 disableElements(id);
                 let index = expenses.findIndex((item) => item.indexOf(`row-${id}`) !== -1);
-                expenses[index] = listItem
+                expenses[index] = updateValues(id);
                 saveExpenses(name, expenses);
                 printExpenses(name);
             }

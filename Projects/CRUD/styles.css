@@ -22,5 +22,4 @@ body {
 
 .list-expense-item {
     grid-column: 1 / 4;
-    border: 1px red solid;
 }
