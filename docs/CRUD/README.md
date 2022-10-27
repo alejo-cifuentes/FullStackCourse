@@ -16,5 +16,6 @@ This is a simple application that use pure javascript to creates a CRUD using lo
     |1|Adds 2 expenses|2 expenses should be listed|2 expenses should be listed|
     |2|Delete the expese with index 1|In the listed expenses just should exist the expense with index 2|In the listed expenses just should exist the expense with index 2| 
     |3|Adds 1 expense|There are 2 expenses listed with the same index (2)|Should exist 2 expenses listed one with index 1 teh other with index 3|
+    |4|Deletes 1 expense|Because both expense have the same index the both are deleted|Should delete just one of the expenses|
 
     The root cause to this bug is the logic to add the index to the expenses is link to the length of the array where the expeneses are stored.
